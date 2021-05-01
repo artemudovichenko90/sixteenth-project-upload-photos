@@ -12,30 +12,28 @@ const users = [
 ]
 
 for (const user of users) {
-    const article = document.createElement('article');
+    const template = document.querySelector('template');
+    const content = template.content.cloneNode(true);
 
-    article.className = 'user';
-    const imageWrapper = document.createElement('div');
-
-    imageWrapper.className = 'image-wrapper';
     const firstLetterFirstName = user.firstName.charAt(0).toUpperCase();
     const firstLetterLastName = user.lastName.charAt(0).toUpperCase();
-    imageWrapper.innerHTML = `<h3 class="image-placeholder">${firstLetterFirstName + firstLetterLastName}</h3>`;
+    content.querySelector('.image-placeholder').innerHTML = firstLetterFirstName + firstLetterLastName;
+    content.querySelector('.full-name').innerHTML = user.firstName + " " + user.lastName;
 
     const img = new Image();
     img.src = user.image;
+    console.log(content.querySelector('.image-wrapper'));//?????
     img.addEventListener('load', ({currentTarget}) => {
         currentTarget.classList.add('image');
-        imageWrapper.innerHTML = '';
-        imageWrapper.appendChild(currentTarget);
+        console.log(content.querySelector('.image-wrapper'));//?????
+        //content.querySelector('.image-wrapper').innerHTML = '';
+        //content.querySelector('.image-wrapper').appendChild('Hello');
     });
 
-    const h1 = document.createElement('h1');
-    h1.className = 'full-name';
-    h1.innerHTML = user.firstName + " " + user.lastName;
-
     const users = document.querySelector('.users');
-    article.append(imageWrapper);
-    article.append(h1);
-    users.append(article);
+    users.append(content);
 }
+
+
+
+
